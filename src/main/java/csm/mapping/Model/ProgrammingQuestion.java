@@ -19,7 +19,7 @@ public class ProgrammingQuestion {
 	@Lob
 	private String programmingQuestionName;
 	@OneToMany
-	@JoinColumn(name = "programmingAnswerId")
+	@JoinColumn(name = "programmingQuestionId")
 	private List<ProgrammingAnswer> programmingAnswerList;
 
 	public int getProgrammingQuestionId() {

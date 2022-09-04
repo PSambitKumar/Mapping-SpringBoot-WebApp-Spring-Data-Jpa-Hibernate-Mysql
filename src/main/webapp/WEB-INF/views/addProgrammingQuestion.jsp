@@ -83,15 +83,13 @@
 
                         <div class="col-md-4 control-label">
                             <label for="programmingQuestionName" class="form-label control-label">Question</label>
-                            <textarea name="programmingQuestionName" rows="5" class="form-control" id="programmingQuestionName1" placeholder="Enter Question"></textarea>
+                            <textarea name="programmingQuestionName" rows="5" class="form-control" id="programmingQuestionName1" placeholder="Question Will be Displayed Here" disabled></textarea>
                         </div>
 
                         <div class="col-md-4 control-label">
-                            <label for="status" class="form-label control-label">Status</label>
-                            <select name="status" id="status1" class="form-control">
-                                <option value="Active">Active</option>
-                                <option value="Inactive">Inactive</option>
-                            </select>
+                            <label for="programmingQuestionAnswer" class="form-label control-label">Answer</label>
+                            <textarea name="programmingQuestionAnswer" rows="5" class="form-control" id="programmingQuestionAnswer" placeholder="Submit Your Answer Here"></textarea>
+
                         </div>
 
                         <div class="btnhold mt-3">
@@ -107,30 +105,48 @@
 
         <div id="view">
             <h3 class="card-title">Question Details</h3>
-<%--            <table class="table table-bordered">--%>
-<%--                <thead>--%>
-<%--                <tr>--%>
-<%--                    <th>Sl.No</th>--%>
-<%--                    <th>Question</th>--%>
-<%--                    <th>Staus</th>--%>
-<%--                    <th>Action</th>--%>
-<%--                </tr>--%>
-<%--                </thead>--%>
-<%--                <tbody>--%>
-<%--                <c:forEach items="${departmentList}" var="department" varStatus="count">--%>
-<%--                    <tr>--%>
-<%--                        <td>${count.count}</td>--%>
-<%--                        <td>${department.departmentName}</td>--%>
-<%--                        <td>${department.status}</td>--%>
-<%--                        <td>--%>
-<%--                            <a href = "/edit/${department.departmentId}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16"><path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/></svg></a>--%>
-<%--                            |--%>
-<%--                            <a href = "/delete/${department.departmentId}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg></a>--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
-<%--                </c:forEach>--%>
-<%--                </tbody>--%>
-<%--            </table>--%>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Sl.No</th>
+                    <th>Question</th>
+                    <th>Answer</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${programmingQuestionList}" var="question" varStatus="count">
+                    <tr>
+                        <td>${count.count}</td>
+                        <td>${question.programmingQuestionName}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${question.programmingAnswerList != null}">
+                                    <c:forEach items="${question.programmingAnswerList}" var="answer" varStatus="count">
+                                        <p>${count.count}. ${answer.programmingAnswerName}</p>
+                                    </c:forEach>
+                                </c:when>
+
+                                <c:when test="${question.programmingAnswerList == null}">
+                                    <span>No Answer Submitted Yet!</span>
+                                </c:when>
+
+                                <c:otherwise>
+                                    <span class="text-danger">Not Answered</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td>No Status</td>
+                        <td>
+                            <a href = "/edit/${question.programmingQuestionId}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16"><path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"/></svg></a>
+                            |
+                            <a href = "/delete/${question.programmingQuestionId}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg></a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -185,9 +201,7 @@
             },
             success: function (data) {
                 console.log(data);
-                $('#question').val(data.question);
-                $('#status1').val(data.status);
-                $('#programmingQuestionId').val(data.programmingQuestionId);
+                $('#programmingQuestionName1').html(data);
             }
         });
     }

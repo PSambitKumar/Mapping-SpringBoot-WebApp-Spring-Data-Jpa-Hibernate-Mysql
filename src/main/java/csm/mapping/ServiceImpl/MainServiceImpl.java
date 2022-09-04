@@ -1,5 +1,6 @@
 package csm.mapping.ServiceImpl;
 
+import csm.mapping.Model.ProgrammingAnswer;
 import csm.mapping.Model.ProgrammingQuestion;
 import csm.mapping.Repository.ProgrammingAnswerRepository;
 import csm.mapping.Repository.ProgrammingQuestionRepository;
@@ -36,5 +37,10 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public ProgrammingQuestion getProgrammingQuestionById(int programmingQuestionId) {
 		return programmingQuestionRepository.findById(programmingQuestionId).get();
+	}
+
+	@Override
+	public ProgrammingAnswer saveProgrammingAnswer(ProgrammingAnswer programmingAnswer) {
+		return programmingAnswerRepository.save(programmingAnswer);
 	}
 }

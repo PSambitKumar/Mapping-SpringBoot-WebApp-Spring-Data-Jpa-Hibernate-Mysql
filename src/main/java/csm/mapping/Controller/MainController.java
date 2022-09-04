@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.persistence.GeneratedValue;
 import javax.validation.constraints.Positive;
@@ -120,13 +121,38 @@ public class MainController {
 		return "addProgrammingQuestion";
 	}
 
+	@ResponseBody
 	@GetMapping(value = "/getProgrammingQuestion")
-	public String getProgrammingQuestion(@RequestParam(value = "programmingQuestionId", required = false) Integer programmingQuestionId, Model model){
+	public String getProgrammingQuestion(@RequestParam(value = "programmingQuestionId", required = false) Integer programmingQuestionId){
 		System.out.println("Inside Get Programming Question------------->>");
 		System.out.println("Programming Question Id: "+programmingQuestionId);
 		ProgrammingQuestion programmingQuestion = mainService.getProgrammingQuestionById(programmingQuestionId);
 		System.out.println("Programming Question: "+programmingQuestion);
-		return null;
+		return programmingQuestion.getProgrammingQuestionName();
+	}
+
+	@PostMapping(value = "/submitProgrammingAnswer")
+	public String submitProgrammingAnswer(@RequestParam(value = "programmingQuestionNumber", required = false)int programmingQuestionNumber,
+	                                      @RequestParam(value = "programmingQuestionAnswer", required = false)String programmingQuestionAnswer,
+	                                      Model model){
+		System.out.println("Inside Submit Programming Answer------------->>");
+		System.out.println("Programming Question Number: "+programmingQuestionNumber);
+		System.out.println("Programming Question Answer: "+programmingQuestionAnswer);
+		ProgrammingQuestion programmingQuestion = mainService.getProgrammingQuestionById(programmingQuestionNumber);
+		List<ProgrammingAnswer> programmingAnswerList = programmingQuestion.getProgrammingAnswerList();
+
+		ProgrammingAnswer programmingAnswer = new ProgrammingAnswer();
+		programmingAnswer.setProgrammingAnswerName(programmingQuestionAnswer);
+		mainService.saveProgrammingAnswer(programmingAnswer);
+
+		programmingAnswerList.add(programmingAnswer);
+		programmingQuestion.setProgrammingAnswerList(programmingAnswerList);
+		mainService.saveProgrammingQuestion(programmingQuestion);
+
+		List<ProgrammingQuestion> programmingQuestionList = mainService.getAllProgrammingQuestion();
+		programmingQuestionList.forEach(System.out::println);
+		model.addAttribute("programmingQuestionList", programmingQuestionList);
+		return "addProgrammingQuestion";
 	}
 
 

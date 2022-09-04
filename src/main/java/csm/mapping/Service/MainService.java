@@ -1,5 +1,6 @@
 package csm.mapping.Service;
 
+import csm.mapping.Model.ProgrammingAnswer;
 import csm.mapping.Model.ProgrammingQuestion;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface MainService {
 	ProgrammingQuestion saveProgrammingQuestion(ProgrammingQuestion programmingQuestion);
 	List<ProgrammingQuestion> getAllProgrammingQuestion();
 	ProgrammingQuestion getProgrammingQuestionById(int programmingQuestionId);
+	ProgrammingAnswer saveProgrammingAnswer(ProgrammingAnswer programmingAnswer);
 }
