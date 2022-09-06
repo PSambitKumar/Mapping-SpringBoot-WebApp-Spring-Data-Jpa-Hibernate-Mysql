@@ -35,7 +35,7 @@
 
     <div class="card-body">
         <div id="add">
-            <form action="/addProgrammingQuestion" method="post" id="addProgrammingQuestionForm">
+            <form action="${pageContext.request.contextPath}/addProgrammingQuestion" method="post" id="addProgrammingQuestionForm">
                 <h3 class="card-title">Question Details</h3>
                 <div class="form">
 
@@ -65,7 +65,7 @@
         </div>
 
         <div id="sub">
-            <form action="/submitProgrammingAnswer" method="post" id="submitProgrammingAnswerForm">
+            <form action="${pageContext.request.contextPath}/submitProgrammingAnswer" method="post" id="submitProgrammingAnswerForm">
                 <h3 class="card-title">Answer Details</h3>
                 <div class="form">
 
